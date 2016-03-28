@@ -1,11 +1,10 @@
 // ==UserScript==
 // @name         Ads DOM Remover
 // @namespace    sagiegurari
-// @version      0.41
+// @version      0.42
 // @author       Sagie Gur-Ari
 // @description  Removes Ad Containers from DOM (doesn't replace adblocker extension, but blocks dynamic content which the adblocker fails to block by removing whole sections from the HTML DOM.)
 // @homepage     https://github.com/sagiegurari/userscripts-ads-dom-remover
-// @downloadURL  https://github.com/sagiegurari/userscripts-ads-dom-remover/blob/master/ads-dom-remover.js
 // @supportURL   https://github.com/sagiegurari/userscripts-ads-dom-remover/issues
 // @match        http://www.ynet.co.il/home/*
 // @match        http://www.ynet.co.il/articles/*
@@ -29,13 +28,18 @@
                 '#colorbox',
                 '#cboxOverlay',
                 '#ads.premium',
-                'iframe',
                 'img[src*="dynamicyield"]',
                 'div.MSCmainContent',
                 '[id*="arketingCarouse"]',
                 '[id*="arketingRecommended"]',
                 '.mainVerticalArticleSharingLinks',
                 '.OUTBRAIN',
+                {
+                    selector: 'iframe',
+                    filter: function ($element) {
+                        return !$element.parent().hasClass('news_ticker_iframe');
+                    }
+                },
                 {
                     selector: 'div.B2b.block div',
                     pre: function ($element) {
