@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Ads DOM Remover
 // @namespace    sagiegurari
-// @version      0.43
+// @version      0.44
 // @author       Sagie Gur-Ari
 // @description  Removes Ad Containers from DOM (doesn't replace adblocker extension, but blocks dynamic content which the adblocker fails to block by removing whole sections from the HTML DOM.)
 // @homepage     https://github.com/sagiegurari/userscripts-ads-dom-remover
@@ -9,6 +9,7 @@
 // @match        http://www.ynet.co.il/home/*
 // @match        http://www.ynet.co.il/articles/*
 // @match        http://www.calcalist.co.il/*
+// @match        http://www.globes.co.il/*
 // @require      https://code.jquery.com/jquery-2.2.2.min.js
 // @grant        none
 // @license      MIT License
@@ -23,8 +24,8 @@
             counter: 0,
             secondLoop: false
         },
-        getSelectors: function (hostName) {
-            return [
+        selectors: {
+            ynet: [
                 '#colorbox',
                 '#cboxOverlay',
                 '#ads.premium',
@@ -49,7 +50,28 @@
                         });
                     }
                 }
-            ];
+            ],
+            globes: [
+                '#chromeWindow',
+                {
+                    selector: 'iframe',
+                    filter: function ($element) {
+                        var id = $element.attr('id');
+                        var src = $element.attr('src') || '';
+                        return (id !== 'GlobalFinanceData_home') && (src.indexOf('/news/') !== -1);
+                    }
+                }
+            ]
+        },
+        getSelectors: function (hostName) {
+            var selectors;
+            if (hostName.indexOf('globes') !== -1) {
+                selectors =  this.selectors.globes;
+            } else { //ynet/calcalist
+                selectors =  this.selectors.ynet;
+            }
+
+            return selectors;
         },
         hideElements: function () {
             var found = false;
