@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Ads DOM Remover
 // @namespace    sagiegurari
-// @version      0.44
+// @version      0.45
 // @author       Sagie Gur-Ari
 // @description  Removes Ad Containers from DOM (doesn't replace adblocker extension, but blocks dynamic content which the adblocker fails to block by removing whole sections from the HTML DOM.)
 // @homepage     https://github.com/sagiegurari/userscripts-ads-dom-remover
@@ -36,6 +36,12 @@
                 '.mainVerticalArticleSharingLinks',
                 '.OUTBRAIN',
                 '.topBannerWrap',
+                '.block.B3 .B3.ghcite.dyother.dyMonitor div',
+                '.bigdealhomepage',
+                '#ww6s_Main',
+                '.buyandsavedy',
+                '.area.footer.ghcite',
+                '.hdr_set_homepage',
                 {
                     selector: 'iframe',
                     filter: function ($element) {
@@ -81,7 +87,12 @@
             selectors.forEach(function (selector) {
                 var selectorString = selector.selector || selector;
 
-                var $element = $(selectorString);
+                var $element;
+                try {
+                    $element = $(selectorString);
+                } catch (error) {
+                    console.error('[user script][Ads DOM Remover][hideElements] Error while running selector:', selectorString, error);
+                }
 
                 if ($element && $element.length) {
                     found = true;
