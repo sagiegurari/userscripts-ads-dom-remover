@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Ads DOM Remover
 // @namespace    sagiegurari
-// @version      0.46
+// @version      0.47
 // @author       Sagie Gur-Ari
 // @description  Removes Ad Containers from DOM (doesn't replace adblocker extension, but blocks dynamic content which the adblocker fails to block by removing whole sections from the HTML DOM.)
 // @homepage     https://github.com/sagiegurari/userscripts-ads-dom-remover
@@ -15,9 +15,11 @@
 // @license      MIT License
 // ==/UserScript==
 /* jshint -W097 */
-'use strict';
+/*global console */
 
 (function run($) {
+    'use strict';
+
     var service = {
         state: {
             intervalID: null,
@@ -81,9 +83,9 @@
         getSelectors: function (hostName) {
             var selectors;
             if (hostName.indexOf('globes') !== -1) {
-                selectors =  this.selectors.globes;
+                selectors = this.selectors.globes;
             } else { //ynet/calcalist
-                selectors =  this.selectors.ynet;
+                selectors = this.selectors.ynet;
             }
 
             return selectors;
@@ -148,7 +150,7 @@
             self.state.secondLoop = !firstTime;
             self.state.counter = 0;
 
-            setTimeout(function() {
+            setTimeout(function () {
                 self.state.intervalID = setInterval(function () {
                     self.actionLoop();
                 }, 150);
