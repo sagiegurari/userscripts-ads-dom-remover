@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Ads DOM Remover
 // @namespace    sagiegurari
-// @version      0.50
+// @version      0.51
 // @author       Sagie Gur-Ari
 // @description  Removes Ad Containers from DOM (doesn't replace adblocker extension, but blocks dynamic content which the adblocker fails to block by removing whole sections from the HTML DOM.)
 // @homepage     https://github.com/sagiegurari/userscripts-ads-dom-remover
@@ -11,7 +11,7 @@
 // @match        http://www.calcalist.co.il/*
 // @match        http://www.globes.co.il/*
 // @require      https://code.jquery.com/jquery-2.2.2.min.js
-// @require      https://raw.githubusercontent.com/sagiegurari/userscripts-ads-dom-remover/fc378743a66f0a4350c72bd700537eaed82382ad/ads-dom-remover-runner.js
+// @require      https://raw.githubusercontent.com/sagiegurari/userscripts-ads-dom-remover/c9a160f6b95236937c530a835a8cc6c7ddeba53b/ads-dom-remover-runner.js
 // @grant        none
 // @license      MIT License
 // ==/UserScript==
