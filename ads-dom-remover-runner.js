@@ -171,7 +171,7 @@
         this.startActionLoop(true, 0);
     };
 
-    window.adr = {
+    window.adrRunner = {
         /**
          * Starts the service run.
          *
