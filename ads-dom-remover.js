@@ -46,6 +46,7 @@
             '#c6_Hor',
             '.homepagevideo-x6',
             '.buyandsave',
+            '.general-image',
             '[name="ExternalWebpageIframe"]',
             {
                 selector: 'iframe',
