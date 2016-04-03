@@ -185,8 +185,10 @@
          * @param {number} [options.interval=250] - Time in millies between each loop
          */
         run: function run($, options) {
-            var service = new Service($, options);
-            service.start();
+            if ($ && (typeof $ === 'function') && options && options.getSelectors && (typeof options.getSelectors === 'function')) {
+                var service = new Service($, options);
+                service.start();
+            }
         }
     };
 }());
