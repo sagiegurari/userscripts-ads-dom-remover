@@ -16,7 +16,6 @@
 // @license      MIT License
 // ==/UserScript==
 /* jshint -W097 */
-/*global console */
 
 (function run($, runner) {
     'use strict';
