@@ -171,24 +171,22 @@
         this.startActionLoop(true, 0);
     };
 
-    window.adrRunner = {
-        /**
-         * Starts the service run.
-         *
-         * @function
-         * @memberof! ADRService
-         * @public
-         * @param {object} $ - The jquery library
-         * @param {object} options - The process options
-         * @param {function} options.getSelectors - Called with a host name and returns an array of selector strings to remove (or objects with more complex definition)
-         * @param {number} [options.loops=10] - The amount of loops to run (will be invoked twice)
-         * @param {number} [options.interval=250] - Time in millies between each loop
-         */
-        run: function run($, options) {
-            if ($ && (typeof $ === 'function') && options && options.getSelectors && (typeof options.getSelectors === 'function')) {
-                var service = new Service($, options);
-                service.start();
-            }
+    /**
+     * Starts the service run.
+     *
+     * @function
+     * @namespace ADRRunner
+     * @public
+     * @param {object} $ - The jquery library
+     * @param {object} options - The process options
+     * @param {function} options.getSelectors - Called with a host name and returns an array of selector strings to remove (or objects with more complex definition)
+     * @param {number} [options.loops=10] - The amount of loops to run (will be invoked twice)
+     * @param {number} [options.interval=250] - Time in millies between each loop
+     */
+    window.adrRunner = function run($, options) {
+        if ($ && (typeof $ === 'function') && options && options.getSelectors && (typeof options.getSelectors === 'function')) {
+            var service = new Service($, options);
+            service.start();
         }
     };
 }());
