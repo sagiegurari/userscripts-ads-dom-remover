@@ -11,7 +11,7 @@
 // @match        http://www.calcalist.co.il/*
 // @match        http://www.globes.co.il/*
 // @require      https://code.jquery.com/jquery-2.2.2.min.js
-// @require      https://raw.githubusercontent.com/sagiegurari/userscripts-ads-dom-remover/c9a160f6b95236937c530a835a8cc6c7ddeba53b/ads-dom-remover-runner.js
+// @require      https://raw.githubusercontent.com/sagiegurari/userscripts-ads-dom-remover/07f17d245db2c6050953701ac1dd97610ececfba/ads-dom-remover-runner.js
 // @grant        none
 // @license      MIT License
 // ==/UserScript==
