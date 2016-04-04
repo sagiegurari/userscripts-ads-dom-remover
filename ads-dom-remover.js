@@ -47,14 +47,12 @@
             '.homepagevideo-x6',
             '.buyandsave',
             '.general-image',
-            '[name="ExternalWebpageIframe"]',
-            {
+            '[name="ExternalWebpageIframe"]', {
                 selector: 'iframe',
                 filter: function ($element) {
                     return !$element.parent().hasClass('news_ticker_iframe');
                 }
-            },
-            {
+            }, {
                 selector: 'div.B2b.block div',
                 pre: function ($element) {
                     $element.parent().css({
@@ -64,8 +62,7 @@
             }
         ],
         globes: [
-            '#chromeWindow',
-            {
+            '#chromeWindow', {
                 selector: 'iframe',
                 filter: function ($element) {
                     var id = $element.attr('id');
