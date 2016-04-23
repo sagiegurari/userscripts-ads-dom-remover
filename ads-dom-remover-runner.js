@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Ads DOM Remover Runner
 // @namespace    sagiegurari
-// @version      0.02
+// @version      0.03
 // @author       Sagie Gur-Ari
 // @description  Library - Removes Ad Containers from DOM (doesn't replace adblocker extension, but blocks dynamic content which the adblocker fails to block by removing whole sections from the HTML DOM.)
 // @homepage     https://github.com/sagiegurari/userscripts-ads-dom-remover
@@ -86,36 +86,45 @@
         var found = false;
 
         var selectors = self.getSelectors(document.location.hostname);
+        if (selectors) {
+            if ((!Array.isArray(selectors)) && selectors.selectors) {
+                if (selectors.id) {
+                    console.debug('[user script][Ads DOM Remover][hideElements] Using Selectors:', selectors.id);
+                }
 
-        selectors.forEach(function (selector) {
-            var selectorString = selector.selector || selector;
-
-            var $element;
-            try {
-                $element = self.$(selectorString);
-            } catch (error) {
-                console.error('[user script][Ads DOM Remover][hideElements] Error while running selector:', selectorString, error);
+                selectors = selectors.selectors;
             }
 
-            if ($element && $element.length) {
-                found = true;
+            selectors.forEach(function (selector) {
+                var selectorString = selector.selector || selector;
 
-                if (selector.pre) {
-                    selector.pre($element);
+                var $element;
+                try {
+                    $element = self.$(selectorString);
+                } catch (error) {
+                    console.error('[user script][Ads DOM Remover][hideElements] Error while running selector:', selectorString, error);
                 }
 
-                var remove = true;
-                if (selector.filter) {
-                    remove = selector.filter($element);
-                }
+                if ($element && $element.length) {
+                    found = true;
 
-                if (remove) {
-                    $element.remove();
-                }
+                    if (selector.pre) {
+                        selector.pre($element);
+                    }
 
-                console.debug('[user script][Ads DOM Remover][hideElements] Found:', selector, 'count:', $element.length, 'in website and removed it.');
-            }
-        });
+                    var remove = true;
+                    if (selector.filter) {
+                        remove = selector.filter($element);
+                    }
+
+                    if (remove) {
+                        $element.remove();
+                    }
+
+                    console.debug('[user script][Ads DOM Remover][hideElements] Found:', selector, 'count:', $element.length, 'in website and removed it.');
+                }
+            });
+        }
 
         return found;
     };
