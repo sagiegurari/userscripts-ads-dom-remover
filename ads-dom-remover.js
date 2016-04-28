@@ -13,7 +13,7 @@
 //@match        https://sourceforge.net/projects/*/download*
 //@match        http://subscenter.cinemast.com/*
 //@require      https://code.jquery.com/jquery-2.2.2.min.js
-//@require      https://greasyfork.org/scripts/18490-ads-dom-remover-runner/code/Ads%20DOM%20Remover%20Runner.js?version=121478
+//@require https://greasyfork.org/scripts/18490-ads-dom-remover-runner/code/Ads%20DOM%20Remover%20Runner.js?version=122502
 //@grant        none
 //@license      MIT License
 //==/UserScript==
