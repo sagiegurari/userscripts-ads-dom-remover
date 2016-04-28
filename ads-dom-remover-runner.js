@@ -1,14 +1,14 @@
-// ==UserScript==
-// @name         Ads DOM Remover Runner
-// @namespace    sagiegurari
-// @version      0.03
-// @author       Sagie Gur-Ari
-// @description  Library - Removes Ad Containers from DOM (doesn't replace adblocker extension, but blocks dynamic content which the adblocker fails to block by removing whole sections from the HTML DOM.)
-// @homepage     https://github.com/sagiegurari/userscripts-ads-dom-remover
-// @supportURL   https://github.com/sagiegurari/userscripts-ads-dom-remover/issues
-// @grant        none
-// @license      MIT License
-// ==/UserScript==
+//==UserScript==
+//@name         Ads DOM Remover Runner
+//@namespace    sagiegurari
+//@version      0.04
+//@author       Sagie Gur-Ari
+//@description  Library - Removes Ad Containers from DOM (doesn't replace adblocker extension, but blocks dynamic content which the adblocker fails to block by removing whole sections from the HTML DOM.)
+//@homepage     https://github.com/sagiegurari/userscripts-ads-dom-remover
+//@supportURL   https://github.com/sagiegurari/userscripts-ads-dom-remover/issues
+//@grant        none
+//@license      MIT License
+//==/UserScript==
 /*global console */
 
 (function initADR() {
@@ -27,6 +27,7 @@
      * @param {number} [options.interval=250] - Time in millies between each loop
      */
     var Service = function ($, options) {
+        /*eslint-disable no-invalid-this*/
         this.$ = $;
         this.getSelectorsExternal = options.getSelectors || this.noop;
         this.loops = options.loops || 10;
@@ -37,6 +38,7 @@
             counter: 0,
             secondLoop: false
         };
+        /*eslint-enable no-invalid-this*/
     };
 
     /**
