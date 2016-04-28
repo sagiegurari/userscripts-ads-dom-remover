@@ -236,15 +236,7 @@
     "space-in-brackets": 0,
     "space-in-parens": 0,
     "space-infix-ops": 2,
-    "spaced-comment": [
-      2,
-      "never",
-      {
-        "exceptions": [
-          "/*"
-        ]
-      }
-    ],
+    "spaced-comment": 0,
     "strict": [2, "function"],
     "template-curly-spacing": [
       2,
