@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Ads DOM Remover Runner
 // @namespace    sagiegurari
-// @version      0.05
+// @version      0.06
 // @author       Sagie Gur-Ari
 // @description  Library - Removes Ad Containers from DOM (doesn't replace adblocker extension, but blocks dynamic content which the adblocker fails to block by removing whole sections from the HTML DOM.)
 // @homepage     https://github.com/sagiegurari/userscripts-ads-dom-remover
@@ -110,12 +110,16 @@
                 if ($element && $element.length) {
                     found = true;
 
-                    if (selector.pre) {
+                    if (selector.fineTuneSelector && (typeof selector.fineTuneSelector === 'function')) {
+                        $element = selector.fineTuneSelector($element);
+                    }
+
+                    if (selector.pre && (typeof selector.pre === 'function')) {
                         selector.pre($element);
                     }
 
                     var remove = true;
-                    if (selector.filter) {
+                    if (selector.filter && (typeof selector.filter === 'function')) {
                         remove = selector.filter($element);
                     }
 
