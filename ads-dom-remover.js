@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Ads DOM Remover
 // @namespace    sagiegurari
-// @version      0.79
+// @version      0.80
 // @author       Sagie Gur-Ari
 // @description  Removes Ad Containers from DOM (doesn't replace adblocker extension, but blocks dynamic content which the adblocker fails to block by removing whole sections from the HTML DOM.)
 // @homepage     https://github.com/sagiegurari/userscripts-ads-dom-remover
@@ -22,12 +22,6 @@
 
 (function run($, runner) {
     'use strict';
-
-    var ynetHelper = {
-        getArticleBlock: function ($element) {
-            return $element.parent();
-        }
-    };
 
     var selectorDefinitions = {
         ynet: [
@@ -62,11 +56,8 @@
             '#PROCOIL_SearchForm',
             '#magazines1024',
             '[id^="promo_"]',
+            '.main_search_radio',
             'tr td [id^="ads."]',
-            {
-                selector: '#multiarticles-9, #multiarticles-12, #multiarticles-13, #multiarticles-14, #multiarticles-15, #multiarticles-16',
-                fineTuneSelector: ynetHelper.getArticleBlock
-            },
             {
                 selector: 'iframe',
                 filter: function ($element) {
@@ -79,12 +70,6 @@
                     $element.parent().css({
                         height: '1px'
                     });
-                }
-            },
-            {
-                selector: '#dcPremiumRightImg',
-                fineTuneSelector: function ($element) {
-                    return $element.parent();
                 }
             }
         ],
@@ -117,6 +102,23 @@
             '.frbanner'
         ]
     };
+
+    [
+        '#dcPremiumRightImg',
+        '#multiarticles-9',
+        '#multiarticles-12',
+        '#multiarticles-13',
+        '#multiarticles-14',
+        '#multiarticles-15',
+        '#multiarticles-16'
+    ].forEach(function addSelector(selector) {
+        selectorDefinitions.ynet.push({
+            selector: selector,
+            fineTuneSelector: function ($element) {
+                return $element.parent();
+            }
+        });
+    });
 
     Object.keys(selectorDefinitions).forEach(function (id) {
         selectorDefinitions[id] = {
