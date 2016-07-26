@@ -25,7 +25,7 @@
 
     var ynetHelper = {
         getArticleBlock: function ($element) {
-            return $element.parent('.block.B4');
+            return $element.parents('.block.B4');
         }
     };
 
