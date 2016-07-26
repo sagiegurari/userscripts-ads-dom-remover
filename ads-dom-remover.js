@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Ads DOM Remover
 // @namespace    sagiegurari
-// @version      0.77
+// @version      0.78
 // @author       Sagie Gur-Ari
 // @description  Removes Ad Containers from DOM (doesn't replace adblocker extension, but blocks dynamic content which the adblocker fails to block by removing whole sections from the HTML DOM.)
 // @homepage     https://github.com/sagiegurari/userscripts-ads-dom-remover
@@ -25,7 +25,7 @@
 
     var ynetHelper = {
         getArticleBlock: function ($element) {
-            return $element.parent().parent().parent().parent();
+            return $element.parent();
         }
     };
 
