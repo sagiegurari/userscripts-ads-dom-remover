@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Ads DOM Remover
 // @namespace    sagiegurari
-// @version      0.82
+// @version      0.83
 // @author       Sagie Gur-Ari
 // @description  Removes Ad Containers from DOM (doesn't replace adblocker extension, but blocks dynamic content which the adblocker fails to block by removing whole sections from the HTML DOM.)
 // @homepage     https://github.com/sagiegurari/userscripts-ads-dom-remover
@@ -13,6 +13,7 @@
 // @match        http://www.globes.co.il/*
 // @match        https://sourceforge.net/projects/*/download*
 // @match        http://subscenter.cinemast.com/*
+// @match        http://www.subscenter.co/*
 // @match        https://*.wikipedia.org/*
 // @require      https://code.jquery.com/jquery-2.2.2.min.js
 // @require      https://greasyfork.org/scripts/18490-ads-dom-remover-runner/code/Ads%20DOM%20Remover%20Runner.js?version=123541
@@ -141,7 +142,7 @@
                 selectors = selectorDefinitions.globes;
             } else if (hostName.indexOf('sourceforge.net') !== -1) {
                 selectors = selectorDefinitions.sourceforge;
-            } else if (hostName.indexOf('subscenter.cinemast.com') !== -1) {
+            } else if (hostName.indexOf('subscenter') !== -1) {
                 selectors = selectorDefinitions.subscenter;
             } else if (hostName.indexOf('wikipedia.org') !== -1) {
                 selectors = selectorDefinitions.wikipedia;
