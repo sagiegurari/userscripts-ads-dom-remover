@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Ads DOM Remover
 // @namespace    sagiegurari
-// @version      0.88
+// @version      0.89
 // @author       Sagie Gur-Ari
 // @description  Removes Ad Containers from DOM (doesn't replace adblocker extension, but blocks dynamic content which the adblocker fails to block by removing whole sections from the HTML DOM.)
 // @homepage     https://github.com/sagiegurari/userscripts-ads-dom-remover
@@ -62,6 +62,9 @@
             '[id^="ads."]',
             '.main_search_radio',
             'tr td [id^="ads."]',
+            '.art-action-wrp',
+            '.header-user-profile',
+            '.left-art-content',
             {
                 selector: '.homepagelitevideo',
                 fineTuneSelector: function ($element) {
@@ -128,7 +131,12 @@
         '#multiarticles-13',
         '#multiarticles-14',
         '#multiarticles-15',
-        '#multiarticles-16'
+        '#multiarticles-16',
+        '.CdaMostViews',
+        '.CdaCalcalistToday',
+        '.CdaRecomendedMovies',
+        '#SpecialBuilder1280',
+        '.cdaFooter1280'
     ].forEach(function addSelector(selector) {
         selectorDefinitions.ynet.push({
             selector: selector,
