@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Ads DOM Remover Runner
 // @namespace    sagiegurari
-// @version      0.06
+// @version      0.07
 // @author       Sagie Gur-Ari
 // @description  Library - Removes Ad Containers from DOM (doesn't replace adblocker extension, but blocks dynamic content which the adblocker fails to block by removing whole sections from the HTML DOM.)
 // @homepage     https://github.com/sagiegurari/userscripts-ads-dom-remover
@@ -21,17 +21,36 @@
      * @class ADRService
      * @public
      * @param {object} $ - The jquery library
-     * @param {object} options - The process options
-     * @param {function} options.getSelectors - Called with a host name and returns an array of selector strings to remove (or objects with more complex definition)
+     * @param {object} [options] - The process options
+     * @param {function} [options.getSelectorDefinitions] - Returns all selector definitions per host
      * @param {number} [options.loops=10] - The amount of loops to run (will be invoked twice)
      * @param {number} [options.interval=250] - Time in millies between each loop
      */
     var Service = function ($, options) {
         /*eslint-disable no-invalid-this*/
         this.$ = $;
-        this.getSelectorsExternal = options.getSelectors || this.noop;
+        options = options || {};
         this.loops = options.loops || 10;
         this.interval = options.interval || 250;
+
+        var getSelectorDefinitions = options.getSelectorDefinitions || this.noop;
+        this.selectorDefinitions = getSelectorDefinitions() || {};
+
+        //find default selectors
+        this.defaultSelectors = null;
+        var index;
+        var id;
+        this.ids = Object.keys(this.selectorDefinitions);
+        for (index = 0; index < this.ids.length; index++) {
+            id = this.ids[index];
+
+            if (this.selectorDefinitions[id].hostNames === true) {
+                this.defaultSelectors = this.selectorDefinitions[id];
+                break;
+            }
+        }
+
+        this.defaultSelectors = this.defaultSelectors || [];
 
         this.state = {
             intervalID: null,
@@ -64,10 +83,37 @@
      */
     Service.prototype.getSelectors = function (hostName) {
         var selectors;
+
         try {
-            selectors = this.getSelectorsExternal(hostName);
+            var definitionIndex;
+            var hostNameIndex;
+            var id;
+            var hostNames;
+            for (definitionIndex = 0; definitionIndex < this.ids.length; definitionIndex++) {
+                id = this.ids[definitionIndex];
+                hostNames = this.selectorDefinitions[id].hostNames;
+
+                if ((typeof hostNames === 'string') && (hostName.indexOf(hostNames) !== -1)) {
+                    selectors = this.selectorDefinitions[id].selectors;
+                } else if (Array.isArray(hostNames)) {
+                    for (hostNameIndex = 0; hostNameIndex < hostNames.length; hostNameIndex++) {
+                        if (hostName.indexOf(hostNames[hostNameIndex]) !== -1) {
+                            selectors = this.selectorDefinitions[id].selectors;
+                            break;
+                        }
+                    }
+                }
+
+                if (selectors) {
+                    break;
+                }
+            }
         } catch (error) {
             console.error('[user script][Ads DOM Remover][getSelectors] Error:', error);
+        }
+
+        if (!selectors) {
+            selectors = this.defaultSelectors;
         }
 
         selectors = selectors || [];
@@ -205,12 +251,12 @@
      * @public
      * @param {object} $ - The jquery library
      * @param {object} options - The process options
-     * @param {function} options.getSelectors - Called with a host name and returns an array of selector strings to remove (or objects with more complex definition)
+     * @param {function} options.getSelectorDefinitions - Returns all selector definitions per host
      * @param {number} [options.loops=10] - The amount of loops to run (will be invoked twice)
      * @param {number} [options.interval=250] - Time in millies between each loop
      */
     window.adrRunner = function run($, options) {
-        if ($ && (typeof $ === 'function') && options && options.getSelectors && (typeof options.getSelectors === 'function')) {
+        if ($ && (typeof $ === 'function') && options && options.getSelectorDefinitions && (typeof options.getSelectorDefinitions === 'function')) {
             var service = new Service($, options);
             service.start();
         }
