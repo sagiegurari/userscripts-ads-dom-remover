@@ -19,7 +19,7 @@
 // @match        https://*.wikipedia.org/*
 // @match        http://www.opensubtitles.org/*
 // @require      https://code.jquery.com/jquery-2.2.2.min.js
-// @require      https://greasyfork.org/scripts/18490-ads-dom-remover-runner/code/Ads%20DOM%20Remover%20Runner.js?version=162071
+// @require      https://greasyfork.org/scripts/18490-ads-dom-remover-runner/code/Ads%20DOM%20Remover%20Runner.js?version=181712
 // @grant        none
 // @license      MIT License
 // ==/UserScript==
