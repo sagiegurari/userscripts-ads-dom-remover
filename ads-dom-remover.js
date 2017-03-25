@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Ads DOM Remover
 // @namespace    sagiegurari
-// @version      1.05
+// @version      1.06
 // @author       Sagie Gur-Ari
 // @description  Removes Ad Containers from DOM (doesn't replace adblocker extension, but blocks dynamic content which the adblocker fails to block by removing whole sections from the HTML DOM.)
 // @homepage     https://github.com/sagiegurari/userscripts-ads-dom-remover
@@ -18,6 +18,8 @@
 // @match        http://www.subscenter.org/*
 // @match        https://*.wikipedia.org/*
 // @match        http://www.opensubtitles.org/*
+// @match        http://*.wikia.com/wiki/*
+// @match        https://*.wikia.com/wiki/*
 // @require      https://code.jquery.com/jquery-2.2.2.min.js
 // @require      https://greasyfork.org/scripts/18490-ads-dom-remover-runner/code/Ads%20DOM%20Remover%20Runner.js?version=181716
 // @grant        none
@@ -65,6 +67,7 @@
                 '[id^="promo_"]',
                 '[id^="ads."]',
                 '[class*="facebook"]',
+                '[class*="WinWin"]',
                 '.main_search_radio',
                 'tr td [id^="ads."]',
                 '.art-action-wrp',
@@ -151,6 +154,14 @@
             hostNames: 'opensubtitles',
             selectors: [
                 '.rec_container_right'
+            ]
+        },
+        wikia: {
+            hostNames: 'wikia.com',
+            selectors: [
+                '.WikiaFooter',
+                '.WikiaRail',
+                '.wds-global-footer'
             ]
         }
     };
