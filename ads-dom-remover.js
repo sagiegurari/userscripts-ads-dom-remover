@@ -1,23 +1,32 @@
 // ==UserScript==
 // @name         Ads DOM Remover
 // @namespace    sagiegurari
-// @version      1.06
+// @version      1.07
 // @author       Sagie Gur-Ari
 // @description  Removes Ad Containers from DOM (doesn't replace adblocker extension, but blocks dynamic content which the adblocker fails to block by removing whole sections from the HTML DOM.)
 // @homepage     https://github.com/sagiegurari/userscripts-ads-dom-remover
 // @supportURL   https://github.com/sagiegurari/userscripts-ads-dom-remover/issues
 // @match        http://www.ynet.co.il/home/*
+// @match        https://www.ynet.co.il/home/*
 // @match        http://www.ynet.co.il/articles/*
+// @match        https://www.ynet.co.il/articles/*
 // @match        http://www.mynet.co.il/articles/*
+// @match        https://www.mynet.co.il/articles/*
 // @match        http://www.calcalist.co.il/*
+// @match        https://www.calcalist.co.il/*
 // @match        http://www.globes.co.il/*
+// @match        https://www.globes.co.il/*
 // @match        https://sourceforge.net/projects/*/download*
 // @match        https://sourceforge.net/projects/*/postdownload*
 // @match        http://subscenter.cinemast.com/*
+// @match        https://subscenter.cinemast.com/*
 // @match        http://www.subscenter.co/*
+// @match        https://www.subscenter.co/*
 // @match        http://www.subscenter.org/*
+// @match        https://www.subscenter.org/*
 // @match        https://*.wikipedia.org/*
 // @match        http://www.opensubtitles.org/*
+// @match        https://www.opensubtitles.org/*
 // @match        http://*.wikia.com/wiki/*
 // @match        https://*.wikia.com/wiki/*
 // @require      https://code.jquery.com/jquery-2.2.2.min.js
