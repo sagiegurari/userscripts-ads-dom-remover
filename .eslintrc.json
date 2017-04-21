@@ -90,6 +90,7 @@
     "no-console": "off",
     "no-extra-parens": "off",
     "no-inline-comments": "off",
+    "no-invalid-this": "off",
     "no-labels": [
       "error",
       {
