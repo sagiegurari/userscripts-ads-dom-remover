@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Ads DOM Remover Runner
 // @namespace    sagiegurari
-// @version      0.10
+// @version      0.11
 // @author       Sagie Gur-Ari
 // @description  Library - Removes Ad Containers from DOM (doesn't replace adblocker extension, but blocks dynamic content which the adblocker fails to block by removing whole sections from the HTML DOM.)
 // @homepage     https://github.com/sagiegurari/userscripts-ads-dom-remover
@@ -173,7 +173,7 @@
                     if (remove) {
                         $element.removeAttr('style');
                         $element.css('display', 'none !important');
-                        
+
                         $element.remove();
 
                         console.debug('[user script][Ads DOM Remover][hideElements] Found:', selector, 'count:', $element.length, 'in website and removed it.');
@@ -261,7 +261,7 @@
      * @param {number} [options.loops=10] - The amount of loops to run (will be invoked twice)
      * @param {number} [options.interval=250] - Time in millies between each loop
      */
-    window.adrRunner = function run($, options) {
+    window.adrRunner = function adrRunner($, options) {
         if ($ && (typeof $ === 'function') && options && options.getSelectorDefinitions && (typeof options.getSelectorDefinitions === 'function')) {
             var service = new Service($, options);
             service.start();
