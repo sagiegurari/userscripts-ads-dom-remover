@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Ads DOM Remover
 // @namespace    sagiegurari
-// @version      1.10
+// @version      1.11
 // @author       Sagie Gur-Ari
 // @description  Removes Ad Containers from DOM (doesn't replace adblocker extension, but blocks dynamic content which the adblocker fails to block by removing whole sections from the HTML DOM.)
 // @homepage     https://github.com/sagiegurari/userscripts-ads-dom-remover
@@ -155,8 +155,10 @@
             hostNames: 'wikipedia.org',
             selectors: [
                 '#frbanner',
+                '#frb-inline',
                 '#wlm-banner',
-                '.frbanner'
+                '.frbanner',
+                '.frm'
             ]
         },
         opensubtitles: {
