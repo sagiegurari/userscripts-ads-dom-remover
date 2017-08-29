@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Ads DOM Remover
 // @namespace    sagiegurari
-// @version      1.14
+// @version      1.15
 // @author       Sagie Gur-Ari
 // @description  Removes Ad Containers from DOM (doesn't replace adblocker extension, but blocks dynamic content which the adblocker fails to block by removing whole sections from the HTML DOM.)
 // @homepage     https://github.com/sagiegurari/userscripts-ads-dom-remover
@@ -25,6 +25,8 @@
 // @match        http://www.subscenter.org/*
 // @match        https://www.subscenter.org/*
 // @match        https://*.wikipedia.org/*
+// @match        http://*.techonthenet.com/*
+// @match        https://*.techonthenet.com/*
 // @match        http://www.opensubtitles.org/*
 // @match        https://www.opensubtitles.org/*
 // @match        http://*.wikia.com/wiki/*
@@ -123,6 +125,12 @@
                         return (id !== 'GlobalFinanceData_home') && (src.indexOf('/news/') !== -1);
                     }
                 }
+            ]
+        },
+        techonthenet: {
+            hostNames: 'techonthenet.com',
+            selectors: [
+                '.adsblocked'
             ]
         },
         sourceforge: {
