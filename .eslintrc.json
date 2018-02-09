@@ -85,6 +85,7 @@
     ],
     "max-statements": "off",
     "max-statements-per-line": "off",
+    "multiline-comment-style": "off",
     "newline-after-var": "off",
     "newline-per-chained-call": "off",
     "no-console": "off",

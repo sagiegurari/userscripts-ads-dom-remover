@@ -1,0 +1,26 @@
+{
+  "name": "userscripts-ads-dom-remover",
+  "version": "1.0.0",
+  "description": "Removes Ad Containers from DOM",
+  "author": {
+    "name": "Sagie Gur-Ari",
+    "email": "sagiegurari@gmail.com"
+  },
+  "license": "MIT",
+  "private": true,
+  "homepage": "https://github.com/sagiegurari/userscripts-ads-dom-remover",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sagiegurari/userscripts-ads-dom-remover.git"
+  },
+  "bugs": {
+    "url": "http://github.com/sagiegurari/userscripts-ads-dom-remover/issues"
+  },
+  "main": "ads-dom-remover.js",
+  "scripts": {
+    "test": "eslint ./ads-dom-remover-runner.js ./ads-dom-remover.js"
+  },
+  "devDependencies": {
+    "eslint": "latest"
+  }
+}

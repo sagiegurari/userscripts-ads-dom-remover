@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Ads DOM Remover
 // @namespace    sagiegurari
-// @version      1.15
+// @version      1.16
 // @author       Sagie Gur-Ari
 // @description  Removes Ad Containers from DOM (doesn't replace adblocker extension, but blocks dynamic content which the adblocker fails to block by removing whole sections from the HTML DOM.)
 // @homepage     https://github.com/sagiegurari/userscripts-ads-dom-remover
@@ -42,7 +42,10 @@
 
     var selectorDefinitions = {
         ynet: {
-            hostNames: ['ynet', 'calcalist'],
+            hostNames: [
+                'ynet',
+                'calcalist'
+            ],
             selectors: [
                 '#colorbox',
                 '#cboxOverlay',
@@ -129,9 +132,7 @@
         },
         techonthenet: {
             hostNames: 'techonthenet.com',
-            selectors: [
-                '.adsblocked'
-            ]
+            selectors: ['.adsblocked']
         },
         sourceforge: {
             hostNames: 'sourceforge.net',
@@ -174,9 +175,7 @@
         },
         opensubtitles: {
             hostNames: 'opensubtitles',
-            selectors: [
-                '.rec_container_right'
-            ]
+            selectors: ['.rec_container_right']
         },
         wikia: {
             hostNames: 'wikia.com',

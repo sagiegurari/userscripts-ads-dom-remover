@@ -1,2 +1,4 @@
 .idea
 .c9
+node_modules
+package-lock.json
