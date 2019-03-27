@@ -38,7 +38,7 @@
 // @match        http://*.bostonglobe.com/*
 // @match        https://*.bostonglobe.com/*
 // @require      https://code.jquery.com/jquery-2.2.2.min.js
-// @require      https://greasyfork.org/scripts/18490-ads-dom-remover-runner/code/Ads%20DOM%20Remover%20Runner.js?version=189663
+// @require      https://greasyfork.org/scripts/18490-ads-dom-remover-runner/code/Ads%20DOM%20Remover%20Runner.js?version=684025
 // @grant        none
 // @license      MIT License
 // ==/UserScript==
