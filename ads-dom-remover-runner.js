@@ -36,9 +36,6 @@
         var getSelectorDefinitions = options.getSelectorDefinitions || this.noop;
         this.selectorDefinitions = getSelectorDefinitions() || {};
 
-        this.loops = options.loops || 10;
-        this.interval = options.interval || 250;
-
         //find default selectors
         this.defaultSelectors = null;
         var index;
@@ -61,6 +58,24 @@
             counter: 0,
             secondLoop: false
         };
+        
+        var selectors = this.getSelectors(document.location.hostname);
+        if (selectors) {
+            if ((!Array.isArray(selectors)) && selectors.selectors) {
+                if (selectors.id) {
+                    console.debug('[user script][Ads DOM Remover][hideElements] Using Selectors:', selectors.id);
+                }
+
+                if (selectors.options) {
+                    this.loops = selectors.options.loops || this.loops;
+                    this.interval = selectors.options.interval || this.interval;
+                }
+
+                selectors = selectors.selectors;
+            }
+            
+            this.state.currentSelectors = selectors;
+        }
         /*eslint-enable no-invalid-this*/
     };
 
@@ -137,60 +152,46 @@
         var self = this;
         var found = false;
 
-        var selectors = self.getSelectors(document.location.hostname);
-        if (selectors) {
-            if ((!Array.isArray(selectors)) && selectors.selectors) {
-                if (selectors.id) {
-                    console.debug('[user script][Ads DOM Remover][hideElements] Using Selectors:', selectors.id);
-                }
+        var selectors = self.state.currentSelectors || [];
 
-                if (selectors.options) {
-                    this.loops = selectors.options.loops || this.loops;
-                    this.interval = selectors.options.interval || this.interval;
-                }
+        selectors.forEach(function (selector) {
+            var selectorString = selector.selector || selector;
 
-                selectors = selectors.selectors;
+            var $element;
+            try {
+                $element = self.$(selectorString);
+            } catch (error) {
+                console.error('[user script][Ads DOM Remover][hideElements] Error while running selector:', selectorString, error);
             }
 
-            selectors.forEach(function (selector) {
-                var selectorString = selector.selector || selector;
+            if ($element && $element.length) {
+                found = true;
 
-                var $element;
-                try {
-                    $element = self.$(selectorString);
-                } catch (error) {
-                    console.error('[user script][Ads DOM Remover][hideElements] Error while running selector:', selectorString, error);
+                if (selector.fineTuneSelector && (typeof selector.fineTuneSelector === 'function')) {
+                    $element = selector.fineTuneSelector($element);
                 }
 
-                if ($element && $element.length) {
-                    found = true;
-
-                    if (selector.fineTuneSelector && (typeof selector.fineTuneSelector === 'function')) {
-                        $element = selector.fineTuneSelector($element);
-                    }
-
-                    if (selector.pre && (typeof selector.pre === 'function')) {
-                        selector.pre($element);
-                    }
-
-                    var remove = true;
-                    if (selector.filter && (typeof selector.filter === 'function')) {
-                        remove = selector.filter($element);
-                    }
-
-                    if (remove) {
-                        $element.removeAttr('style');
-                        $element.css('display', 'none !important');
-
-                        $element.remove();
-
-                        console.debug('[user script][Ads DOM Remover][hideElements] Found:', selector, 'count:', $element.length, 'in website and removed it.');
-                    } else {
-                        console.debug('[user script][Ads DOM Remover][hideElements] Found:', selector, 'count:', $element.length, 'in website but not removing.');
-                    }
+                if (selector.pre && (typeof selector.pre === 'function')) {
+                    selector.pre($element);
                 }
-            });
-        }
+
+                var remove = true;
+                if (selector.filter && (typeof selector.filter === 'function')) {
+                    remove = selector.filter($element);
+                }
+
+                if (remove) {
+                    $element.removeAttr('style');
+                    $element.css('display', 'none !important');
+
+                    $element.remove();
+
+                    console.debug('[user script][Ads DOM Remover][hideElements] Found:', selector, 'count:', $element.length, 'in website and removed it.');
+                } else {
+                    console.debug('[user script][Ads DOM Remover][hideElements] Found:', selector, 'count:', $element.length, 'in website but not removing.');
+                }
+            }
+        });
 
         return found;
     };
@@ -254,7 +255,7 @@
      * @private
      */
     Service.prototype.start = function () {
-        this.startActionLoop(true, 0);
+        this.startActionLoop(true, 10);
     };
 
     /**
