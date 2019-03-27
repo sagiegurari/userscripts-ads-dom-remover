@@ -201,8 +201,15 @@
             selectors: [
                 '.ytp-ce-element',
                 'ytd-companion-slot-renderer',
-                '#masthead-ad'
-            ]
+                '#masthead-ad',
+                '.video-ads ytp-ad-module',
+                '.ytp-ad-overlay-ad-info-dialog-container',
+                '.ytp-ad-overlay-slot'
+            ],
+            options: {
+                loops: 100,
+                interval: 5000
+            }
         },
         bostonglobe: {
             hostNames: 'bostonglobe.com',

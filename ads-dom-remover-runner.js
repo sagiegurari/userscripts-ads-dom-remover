@@ -36,6 +36,9 @@
         var getSelectorDefinitions = options.getSelectorDefinitions || this.noop;
         this.selectorDefinitions = getSelectorDefinitions() || {};
 
+        this.loops = options.loops || 10;
+        this.interval = options.interval || 250;
+
         //find default selectors
         this.defaultSelectors = null;
         var index;
@@ -139,6 +142,11 @@
             if ((!Array.isArray(selectors)) && selectors.selectors) {
                 if (selectors.id) {
                     console.debug('[user script][Ads DOM Remover][hideElements] Using Selectors:', selectors.id);
+                }
+
+                if (selectors.options) {
+                    this.loops = selectors.options.loops || this.loops;
+                    this.interval = selectors.options.interval || this.interval;
                 }
 
                 selectors = selectors.selectors;
