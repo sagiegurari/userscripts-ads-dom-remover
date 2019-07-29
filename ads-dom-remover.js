@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Ads DOM Remover
 // @namespace    sagiegurari
-// @version      1.26
+// @version      1.27
 // @author       Sagie Gur-Ari
 // @description  Removes Ad Containers from DOM (doesn't replace adblocker extension, but blocks dynamic content which the adblocker fails to block by removing whole sections from the HTML DOM.)
 // @homepage     https://github.com/sagiegurari/userscripts-ads-dom-remover
@@ -35,6 +35,8 @@
 // @match        https://*.reddit.com/*
 // @match        http://*.youtube.com/*
 // @match        https://*.youtube.com/*
+// @match        http://*.geeksforgeeks.org/*
+// @match        https://*.geeksforgeeks.org/*
 // @match        http://*.bostonglobe.com/*
 // @match        https://*.bostonglobe.com/*
 // @require      https://code.jquery.com/jquery-2.2.2.min.js
@@ -217,6 +219,12 @@
                 loops: 200,
                 interval: 2500
             }
+        },
+        geeksforgeeks: {
+            hostNames: 'geeksforgeeks.org',
+            selectors: [
+                '.login-modal-div'
+            ]
         },
         bostonglobe: {
             hostNames: 'bostonglobe.com',
