@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Ads DOM Remover Runner
 // @namespace    sagiegurari
-// @version      0.12
+// @version      0.13
 // @author       Sagie Gur-Ari
 // @description  Library - Removes Ad Containers from DOM (doesn't replace adblocker extension, but blocks dynamic content which the adblocker fails to block by removing whole sections from the HTML DOM.)
 // @homepage     https://github.com/sagiegurari/userscripts-ads-dom-remover
@@ -9,7 +9,6 @@
 // @grant        none
 // @license      MIT License
 // ==/UserScript==
-/*global console*/
 
 (function initADR() {
     'use strict';
@@ -26,8 +25,7 @@
      * @param {number} [options.loops=10] - The amount of loops to run (will be invoked twice)
      * @param {number} [options.interval=250] - Time in millies between each loop
      */
-    var Service = function ($, options) {
-        /*eslint-disable no-invalid-this*/
+    var Service = function($, options) {
         this.$ = $;
         options = options || {};
         this.loops = options.loops || 10;
@@ -36,7 +34,7 @@
         var getSelectorDefinitions = options.getSelectorDefinitions || this.noop;
         this.selectorDefinitions = getSelectorDefinitions() || {};
 
-        //find default selectors
+        // find default selectors
         this.defaultSelectors = null;
         var index;
         var id;
@@ -58,12 +56,15 @@
             counter: 0,
             secondLoop: false
         };
-        
+
         var selectors = this.getSelectors(document.location.hostname);
         if (selectors) {
             if ((!Array.isArray(selectors)) && selectors.selectors) {
                 if (selectors.id) {
-                    console.debug('[user script][Ads DOM Remover][hideElements] Using Selectors:', selectors.id);
+                    console.debug(
+                        '[user script][Ads DOM Remover][hideElements] Using Selectors:',
+                        selectors.id
+                    );
                 }
 
                 if (selectors.options) {
@@ -73,10 +74,9 @@
 
                 selectors = selectors.selectors;
             }
-            
+
             this.state.currentSelectors = selectors;
         }
-        /*eslint-enable no-invalid-this*/
     };
 
     /**
@@ -87,7 +87,7 @@
      * @private
      * @returns {undefined} Always undefined
      */
-    Service.prototype.noop = function () {
+    Service.prototype.noop = function() {
         return undefined;
     };
 
@@ -100,7 +100,7 @@
      * @param {string} hostName - The current host name
      * @returns {Array} Array of selectors (or objects) to remove from the DOM
      */
-    Service.prototype.getSelectors = function (hostName) {
+    Service.prototype.getSelectors = function(hostName) {
         var selectors;
 
         try {
@@ -128,7 +128,10 @@
                 }
             }
         } catch (error) {
-            console.error('[user script][Ads DOM Remover][getSelectors] Error:', error);
+            console.error(
+                '[user script][Ads DOM Remover][getSelectors] Error:',
+                error
+            );
         }
 
         if (!selectors) {
@@ -148,20 +151,24 @@
      * @private
      * @returns {boolean} True if any element was removed during this invocation
      */
-    Service.prototype.hideElements = function () {
+    Service.prototype.hideElements = function() {
         var self = this;
         var found = false;
 
         var selectors = self.state.currentSelectors || [];
 
-        selectors.forEach(function (selector) {
+        selectors.forEach(function(selector) {
             var selectorString = selector.selector || selector;
 
             var $element;
             try {
                 $element = self.$(selectorString);
             } catch (error) {
-                console.error('[user script][Ads DOM Remover][hideElements] Error while running selector:', selectorString, error);
+                console.error(
+                    '[user script][Ads DOM Remover][hideElements] Error while running selector:',
+                    selectorString,
+                    error
+                );
             }
 
             if ($element && $element.length) {
@@ -182,13 +189,28 @@
 
                 if (remove) {
                     $element.removeAttr('style');
-                    $element.css('display', 'none !important');
+                    $element.css(
+                        'display',
+                        'none !important'
+                    );
 
                     $element.remove();
 
-                    console.debug('[user script][Ads DOM Remover][hideElements] Found:', selector, 'count:', $element.length, 'in website and removed it.');
+                    console.debug(
+                        '[user script][Ads DOM Remover][hideElements] Found:',
+                        selector,
+                        'count:',
+                        $element.length,
+                        'in website and removed it.'
+                    );
                 } else {
-                    console.debug('[user script][Ads DOM Remover][hideElements] Found:', selector, 'count:', $element.length, 'in website but not removing.');
+                    console.debug(
+                        '[user script][Ads DOM Remover][hideElements] Found:',
+                        selector,
+                        'count:',
+                        $element.length,
+                        'in website but not removing.'
+                    );
                 }
             }
         });
@@ -203,20 +225,33 @@
      * @memberof! ADRService
      * @private
      */
-    Service.prototype.actionLoop = function () {
+    Service.prototype.actionLoop = function() {
         this.state.counter++;
         var stopInterval = this.state.intervalID && (this.state.counter > this.loops);
-        console.debug('[user script][Ads DOM Remover][actionLoop] Running loop:', this.state.counter, 'state:', this.state, 'stop interval:', stopInterval);
+        console.debug(
+            '[user script][Ads DOM Remover][actionLoop] Running loop:',
+            this.state.counter,
+            'state:',
+            this.state,
+            'stop interval:',
+            stopInterval
+        );
 
         this.hideElements();
 
         if (stopInterval) {
-            console.debug('[user script][Ads DOM Remover][actionLoop] Clearing interval ID:', this.state.intervalID);
+            console.debug(
+                '[user script][Ads DOM Remover][actionLoop] Clearing interval ID:',
+                this.state.intervalID
+            );
             clearInterval(this.state.intervalID);
             this.state.intervalID = null;
 
             if (!this.state.secondLoop) {
-                this.startActionLoop(false, 2500);
+                this.startActionLoop(
+                    false,
+                    2500
+                );
             }
         }
     };
@@ -230,21 +265,30 @@
      * @param {boolean} firstTime - If this function was called for the first time
      * @param {number} delay - The delay to wait before setting the interval
      */
-    Service.prototype.startActionLoop = function (firstTime, delay) {
+    Service.prototype.startActionLoop = function(firstTime, delay) {
         var self = this;
 
         self.state.secondLoop = !firstTime;
         self.state.counter = 0;
 
-        setTimeout(function () {
-            self.state.intervalID = setInterval(function () {
-                self.actionLoop();
-            }, self.interval);
+        setTimeout(
+            function() {
+                self.state.intervalID = setInterval(
+                    function() {
+                        self.actionLoop();
+                    },
+                    self.interval
+                );
 
-            setTimeout(function () {
-                self.hideElements();
-            }, 15000);
-        }, delay);
+                setTimeout(
+                    function() {
+                        self.hideElements();
+                    },
+                    15000
+                );
+            },
+            delay
+        );
     };
 
     /**
@@ -254,8 +298,11 @@
      * @memberof! ADRService
      * @private
      */
-    Service.prototype.start = function () {
-        this.startActionLoop(true, 10);
+    Service.prototype.start = function() {
+        this.startActionLoop(
+            true,
+            10
+        );
     };
 
     /**
@@ -272,7 +319,10 @@
      */
     window.adrRunner = function adrRunner($, options) {
         if ($ && (typeof $ === 'function') && options && options.getSelectorDefinitions && (typeof options.getSelectorDefinitions === 'function')) {
-            var service = new Service($, options);
+            var service = new Service(
+                $,
+                options
+            );
             service.start();
         }
     };
