@@ -18,9 +18,12 @@
   },
   "main": "ads-dom-remover.js",
   "scripts": {
-    "test": "eslint ./ads-dom-remover-runner.js ./ads-dom-remover.js"
+    "test": "eslint ./ads-dom-*.js",
+    "format": "js-beautify --end-with-newline ./ads-dom-*.js",
+    "all": "npm run format && npm test"
   },
   "devDependencies": {
-    "eslint": "latest"
+    "eslint": "latest",
+    "js-beautify": "latest"
   }
 }

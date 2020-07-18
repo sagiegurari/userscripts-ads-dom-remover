@@ -8,6 +8,13 @@
   "extends": "eslint:all",
   "rules": {
     "accessor-pairs": "off",
+    "array-bracket-newline": [
+      "error",
+      {
+        "multiline": true,
+        "minItems": 3
+      }
+    ],
     "array-bracket-spacing": [
       "error",
       "never"
@@ -48,6 +55,8 @@
     "default-case": "off",
     "func-names": "off",
     "func-style": "off",
+    "function-call-argument-newline": "off",
+    "function-paren-newline": "off",
     "global-require": "off",
     "id-blacklist": "off",
     "id-length": "off",
@@ -78,6 +87,7 @@
     "max-depth": "off",
     "max-len": "off",
     "max-lines": "off",
+    "max-lines-per-function": "off",
     "max-nested-callbacks": "off",
     "max-params": [
       "error",
@@ -136,8 +146,8 @@
     ],
     "padded-blocks": "off",
     "prefer-arrow-callback": "off",
-    "prefer-const": "off",
     "prefer-destructuring": "off",
+    "prefer-named-capture-group": "off",
     "prefer-numeric-literals": "off",
     "prefer-rest-params": "off",
     "prefer-spread": "off",
@@ -155,6 +165,7 @@
       "error",
       "never"
     ],
+    "require-unicode-regexp": "off",
     "semi-spacing": [
       "error",
       {
@@ -179,7 +190,6 @@
     "space-before-function-paren": "off",
     "space-in-brackets": "off",
     "space-in-parens": "off",
-    "spaced-comment": "off",
     "template-curly-spacing": [
       "error",
       "never"

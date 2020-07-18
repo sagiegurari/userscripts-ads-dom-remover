@@ -106,21 +106,21 @@
                 '#INDbtnWrap',
                 {
                     selector: '.homepagelitevideo',
-                    fineTuneSelector: function ($element) {
+                    fineTuneSelector: function($element) {
                         return $element.parent().parent();
                     }
                 },
                 {
                     selector: 'iframe',
-                    fineTuneSelector: function ($element) {
-                        return $element.filter(function () {
+                    fineTuneSelector: function($element) {
+                        return $element.filter(function() {
                             return !$(this).parent().hasClass('news_ticker_iframe');
                         });
                     }
                 },
                 {
                     selector: 'div.B2b.block div',
-                    pre: function ($element) {
+                    pre: function($element) {
                         $element.parent().css({
                             height: '1px'
                         });
@@ -134,7 +134,7 @@
                 '#chromeWindow',
                 {
                     selector: 'iframe',
-                    filter: function ($element) {
+                    filter: function($element) {
                         var id = $element.attr('id');
                         var src = $element.attr('src') || '';
 
@@ -167,7 +167,7 @@
                 '#aboveSite',
                 {
                     selector: '#subtitles_list a[href="/he/contactus/"]',
-                    fineTuneSelector: function ($element) {
+                    fineTuneSelector: function($element) {
                         return $element.parent();
                     }
                 }
@@ -253,15 +253,20 @@
     ].forEach(function addSelector(selector) {
         selectorDefinitions.ynet.selectors.push({
             selector: selector,
-            fineTuneSelector: function ($element) {
+            fineTuneSelector: function($element) {
                 return $element.parent();
             }
         });
     });
 
-    runner($, {
-        getSelectorDefinitions: function () {
-            return selectorDefinitions;
+    runner(
+        $, {
+            getSelectorDefinitions: function() {
+                return selectorDefinitions;
+            }
         }
-    });
-}(window.jQuery.noConflict(true), window.adrRunner));
+    );
+}(
+    window.jQuery.noConflict(true),
+    window.adrRunner
+));
