@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Ads DOM Remover
 // @namespace    sagiegurari
-// @version      1.31
+// @version      1.32
 // @author       Sagie Gur-Ari
 // @description  Removes Ad Containers from DOM (doesn't replace adblocker extension, but blocks dynamic content which the adblocker fails to block by removing whole sections from the HTML DOM.)
 // @homepage     https://github.com/sagiegurari/userscripts-ads-dom-remover
@@ -106,6 +106,7 @@
                 '[title="YouTube"]',
                 '[title="facebook"]',
                 '#INDbtnWrap',
+                '.YnetPremiumHeaderLogin',
                 {
                     selector: '.homepagelitevideo',
                     fineTuneSelector: function ($element) {
