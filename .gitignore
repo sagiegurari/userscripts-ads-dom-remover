@@ -1,4 +1,7 @@
-.idea
-.c9
+target
+.temp
 node_modules
+npm-debug.log
 package-lock.json
+.nyc_output
+coverage

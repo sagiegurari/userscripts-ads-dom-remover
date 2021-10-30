@@ -24,12 +24,15 @@
      * @param {function} [options.getSelectorDefinitions] - Returns all selector definitions per host
      * @param {number} [options.loops=10] - The amount of loops to run (will be invoked twice)
      * @param {number} [options.interval=250] - Time in millies between each loop
+     * @param {function} [options.onDone] - Invoked at the end of all loops
      */
-    var Service = function($, options) {
+    var Service = function ($, options) {
         this.$ = $;
         options = options || {};
         this.loops = options.loops || 10;
         this.interval = options.interval || 250;
+        this.onDone = options.onDone || this.noop;
+        var hostname = options.hostname || document.location.hostname;
 
         var getSelectorDefinitions = options.getSelectorDefinitions || this.noop;
         this.selectorDefinitions = getSelectorDefinitions() || {};
@@ -57,7 +60,7 @@
             secondLoop: false
         };
 
-        var selectors = this.getSelectors(document.location.hostname);
+        var selectors = this.getSelectors(hostname);
         if (selectors) {
             if ((!Array.isArray(selectors)) && selectors.selectors) {
                 if (selectors.id) {
@@ -87,7 +90,7 @@
      * @private
      * @returns {undefined} Always undefined
      */
-    Service.prototype.noop = function() {
+    Service.prototype.noop = function () {
         return undefined;
     };
 
@@ -100,7 +103,7 @@
      * @param {string} hostName - The current host name
      * @returns {Array} Array of selectors (or objects) to remove from the DOM
      */
-    Service.prototype.getSelectors = function(hostName) {
+    Service.prototype.getSelectors = function (hostName) {
         var selectors;
 
         try {
@@ -138,9 +141,7 @@
             selectors = this.defaultSelectors;
         }
 
-        selectors = selectors || [];
-
-        return selectors;
+        return selectors || [];
     };
 
     /**
@@ -151,13 +152,13 @@
      * @private
      * @returns {boolean} True if any element was removed during this invocation
      */
-    Service.prototype.hideElements = function() {
+    Service.prototype.hideElements = function () {
         var self = this;
         var found = false;
 
         var selectors = self.state.currentSelectors || [];
 
-        selectors.forEach(function(selector) {
+        selectors.forEach(function (selector) {
             var selectorString = selector.selector || selector;
 
             var $element;
@@ -184,7 +185,8 @@
 
                 var remove = true;
                 if (selector.filter && (typeof selector.filter === 'function')) {
-                    remove = selector.filter($element);
+                    $element = selector.filter($element);
+                    remove = !!$element.length;
                 }
 
                 if (remove) {
@@ -225,7 +227,7 @@
      * @memberof! ADRService
      * @private
      */
-    Service.prototype.actionLoop = function() {
+    Service.prototype.actionLoop = function () {
         this.state.counter++;
         var stopInterval = this.state.intervalID && (this.state.counter > this.loops);
         console.debug(
@@ -252,6 +254,8 @@
                     false,
                     2500
                 );
+            } else {
+                this.onDone();
             }
         }
     };
@@ -265,23 +269,23 @@
      * @param {boolean} firstTime - If this function was called for the first time
      * @param {number} delay - The delay to wait before setting the interval
      */
-    Service.prototype.startActionLoop = function(firstTime, delay) {
+    Service.prototype.startActionLoop = function (firstTime, delay) {
         var self = this;
 
         self.state.secondLoop = !firstTime;
         self.state.counter = 0;
 
         setTimeout(
-            function() {
+            function () {
                 self.state.intervalID = setInterval(
-                    function() {
+                    function () {
                         self.actionLoop();
                     },
                     self.interval
                 );
 
                 setTimeout(
-                    function() {
+                    function () {
                         self.hideElements();
                     },
                     15000
@@ -298,7 +302,7 @@
      * @memberof! ADRService
      * @private
      */
-    Service.prototype.start = function() {
+    Service.prototype.start = function () {
         this.startActionLoop(
             true,
             10

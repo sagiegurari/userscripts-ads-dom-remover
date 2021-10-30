@@ -18,12 +18,18 @@
   },
   "main": "ads-dom-remover.js",
   "scripts": {
-    "test": "eslint ./ads-dom-*.js",
-    "format": "js-beautify --end-with-newline ./ads-dom-*.js",
-    "all": "npm run format && npm test"
+    "format": "js-beautify --config ./.jsbeautifyrc --file ./*.js ./__tests__/**/*.js",
+    "lint": "eslint ./*.js ./__tests__/**/*.js",
+    "jstest": "jest",
+    "test": "npm run format && npm run lint && npm run jstest"
   },
   "devDependencies": {
-    "eslint": "latest",
-    "js-beautify": "latest"
+    "eslint": "^8",
+    "jest": "^27",
+    "jquery": "^3",
+    "js-beautify": "^1"
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
   }
 }

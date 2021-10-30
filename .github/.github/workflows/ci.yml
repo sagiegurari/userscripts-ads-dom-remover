@@ -1,0 +1,18 @@
+name: CI
+on: [push, pull_request]
+env:
+  CLICOLOR_FORCE: 1
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Install Dependencies
+      run: npm install
+    - name: Run CI
+      run: npm test
+
