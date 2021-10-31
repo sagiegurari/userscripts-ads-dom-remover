@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Ads DOM Remover
 // @namespace    sagiegurari
-// @version      1.34
+// @version      1.35
 // @author       Sagie Gur-Ari
 // @description  Removes Ad Containers from DOM (doesn't replace adblocker extension, but blocks dynamic content which the adblocker fails to block by removing whole sections from the HTML DOM.)
 // @homepage     https://github.com/sagiegurari/userscripts-ads-dom-remover
@@ -12,12 +12,8 @@
 // @match        https://www.globes.co.il/*
 // @match        https://sourceforge.net/projects/*/download*
 // @match        https://sourceforge.net/projects/*/postdownload*
-// @match        https://subscenter.cinemast.com/*
-// @match        https://www.subscenter.co/*
-// @match        https://www.subscenter.org/*
 // @match        https://*.wikipedia.org/*
 // @match        https://*.techonthenet.com/*
-// @match        https://www.opensubtitles.org/*
 // @match        https://*.wikia.com/wiki/*
 // @match        https://*.reddit.com/*
 // @match        https://*.youtube.com/*
@@ -26,7 +22,7 @@
 // @match        https://*.aternos.org/*
 // @match        https://aternos.org/*
 // @require      https://code.jquery.com/jquery-2.2.2.min.js
-// @require      https://greasyfork.org/scripts/18490-ads-dom-remover-runner/code/Ads%20DOM%20Remover%20Runner.js?version=983659
+// @require      https://greasyfork.org/scripts/18490-ads-dom-remover-runner/code/Ads%20DOM%20Remover%20Runner.js?version=983896
 // @grant        none
 // @license      MIT License
 // ==/UserScript==
@@ -35,6 +31,23 @@
     'use strict';
 
     var selectorDefinitions = {
+        test: {
+            // the test selector definition is only used for testing
+            hostNames: [
+                '__tests1__',
+                '__tests2__'
+            ],
+            selectors: {
+                options: {
+                    loops: 1,
+                    interval: 1
+                },
+                selectors: [
+                    '.ad1',
+                    '.ad2'
+                ]
+            }
+        },
         ynet: {
             hostNames: [
                 'ynet',
@@ -140,24 +153,6 @@
                 '#page-body'
             ]
         },
-        subscenter: {
-            hostNames: 'subscenter',
-            selectors: [
-                '.weekBottom',
-                '.reviewsWindow',
-                '#banner_cinemast',
-                '.bottomMenu',
-                'footer',
-                '#paypal',
-                '#aboveSite',
-                {
-                    selector: '#subtitles_list a[href="/he/contactus/"]',
-                    fineTuneSelector: function ($element) {
-                        return $element.parent();
-                    }
-                }
-            ]
-        },
         wikipedia: {
             hostNames: 'wikipedia.org',
             selectors: [
@@ -170,10 +165,6 @@
                 '.frm',
                 '.frb'
             ]
-        },
-        opensubtitles: {
-            hostNames: 'opensubtitles',
-            selectors: ['.rec_container_right']
         },
         wikia: {
             hostNames: 'wikia.com',
