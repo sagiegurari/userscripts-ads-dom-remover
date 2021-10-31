@@ -24,6 +24,7 @@
      * @param {function} [options.getSelectorDefinitions] - Returns all selector definitions per host
      * @param {number} [options.loops=10] - The amount of loops to run (will be invoked twice)
      * @param {number} [options.interval=250] - Time in millies between each loop
+     * @param {number} [options.secondLoopInterval=2500] - Time in millies between each bulk of loops
      * @param {function} [options.onDone] - Invoked at the end of all loops
      */
     var Service = function ($, options) {
@@ -31,8 +32,13 @@
         options = options || {};
         this.loops = options.loops || 10;
         this.interval = options.interval || 250;
+        this.secondLoopInterval = options.secondLoopInterval || 2500;
         this.onDone = options.onDone || this.noop;
-        var hostname = options.hostname || document.location.hostname;
+
+        var hostname = document.location.hostname;
+        if (window.adrRunner && window.adrRunner.mockHostname) {
+            hostname = window.adrRunner.mockHostname;
+        }
 
         var getSelectorDefinitions = options.getSelectorDefinitions || this.noop;
         this.selectorDefinitions = getSelectorDefinitions() || {};
@@ -252,7 +258,7 @@
             if (!this.state.secondLoop) {
                 this.startActionLoop(
                     false,
-                    2500
+                    this.secondLoopInterval
                 );
             } else {
                 this.onDone();

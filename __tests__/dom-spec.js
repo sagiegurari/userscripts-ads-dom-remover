@@ -26,11 +26,12 @@ describe('DOM Tests', () => {
                     <span class="ad bad">bad</span>
                 </div>`;
 
+            window.adrRunner.mockHostname = hostname;
             window.adrRunner(
                 $, {
                     loops: 1,
                     interval: 1,
-                    hostname,
+                    secondLoopInterval: 1,
                     getSelectorDefinitions: function () {
                         return {
                             test: {
@@ -93,6 +94,28 @@ describe('DOM Tests', () => {
                 return reject(`CSS modified, DOM: ${document.body.innerHTML}`);
             }
             resolve();
+        });
+    });
+
+    it('e2e', () => {
+        window.adrRunner.mockHostname = '__tests1__';
+        document.body.innerHTML = `<div>
+                    <span class="ad1 bad">bad</span>
+                    <span class="ad2 bad">bad</span>
+                    <span class="ad2 bad">bad</span>
+                    <span class="ad2 bad">bad</span>
+                    <span class="ad3 good">bad</span>
+                </div>`;
+        window.jQuery = $;
+        require('../ads-dom-remover');
+
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                if (!document.querySelector('.bad')) {
+                    return reject(`All bad elements removed, DOM: ${document.body.innerHTML}`);
+                }
+                resolve();
+            }, 10);
         });
     });
 });
