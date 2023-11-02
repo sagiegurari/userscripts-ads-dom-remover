@@ -190,7 +190,8 @@
                 '#masthead-ad',
                 '.video-ads ytp-ad-module',
                 '.ytp-ad-overlay-ad-info-dialog-container',
-                '.ytp-ad-overlay-slot'
+                '.ytp-ad-overlay-slot',
+                'tp-yt-paper-dialog'
             ],
             options: {
                 loops: 200,
